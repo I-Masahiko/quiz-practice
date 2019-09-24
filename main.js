@@ -35,6 +35,7 @@
         answerState.numberOfCurrets = 0;
 
         console.log(answerState.quizzes);
+        indexNum = answerState.currentIndex;
 
         nextQuiz();
       })
@@ -45,12 +46,13 @@
   // i = 0;
 
   const nextQuiz = function() {
-    questionNum.textContent = `問題${answerState.currentIndex + 1}`;
-    questionGenre.textContent = `[ジャンル] ${answerState.quizzes[answerState.currentIndex].category}`;
-    questionDifficulty.textContent = `[難易度] ${answerState.quizzes[answerState.currentIndex].difficulty}`;
-    questionContent.textContent = answerState.quizzes[answerState.currentIndex].question;
+    console.log(indexNum + 1);
+    questionNum.textContent = `問題${indexNum + 1}`;
+    questionGenre.textContent = `[ジャンル] ${answerState.quizzes[indexNum].category}`;
+    questionDifficulty.textContent = `[難易度] ${answerState.quizzes[indexNum].difficulty}`;
+    questionContent.textContent = answerState.quizzes[indexNum].question;
 
-    answerState.quizzes[answerState.currentIndex].incorrect_answers.push(answerState.quizzes[answerState.currentIndex].correct_answer);
+    answerState.quizzes[indexNum].incorrect_answers.push(answerState.quizzes[indexNum].correct_answer);
     createBtn();
   }
 
@@ -58,13 +60,13 @@
 
   const createBtn = function() {
 
-    const current = answerState.quizzes[answerState.currentIndex].correct_answer;
+    const current = answerState.quizzes[indexNum].correct_answer;
     console.log(current);
 
-    let  quizNum = answerState.quizzes[answerState.currentIndex].incorrect_answers.length;
+    let  quizNum = answerState.quizzes[indexNum].incorrect_answers.length;
 
     // shuffleAnswers();
-    const answers = [...answerState.quizzes[answerState.currentIndex].incorrect_answers];
+    const answers = [...answerState.quizzes[indexNum].incorrect_answers];
     console.log(answers);
     const answersCopies = answers.slice();
 
@@ -78,18 +80,18 @@
       const answerBtn = document.createElement(`button`);
       const br = document.createElement(`br`);
 
-      answerBtn.textContent = answerState.quizzes[answerState.currentIndex].incorrect_answers[answersNum];
+      answerBtn.textContent = answerState.quizzes[indexNum].incorrect_answers[answersNum];
       chooseBtn.appendChild(answerBtn);
       chooseBtn.appendChild(br);
 
       answerBtn.addEventListener(`click`, () =>{
-        answerState.currentIndex++;
+        indexNum++;
 
         if(answerBtn.textContent === current){
           answerState.numberOfCurrets++;
         };
 
-        if(answerState.currentIndex === answerState.quizzes.length){
+        if(indexNum === answerState.quizzes.length){
           questionNum.textContent = `あなたの正答数は${answerState.numberOfCurrets}です`;
           questionGenre.textContent = ``;
           questionDifficulty.textContent = ``;
@@ -128,7 +130,7 @@
 
 
    // const shuffleAnswers = function() {
-   //   const answers = [...answerState.quizzes[answerState.currentIndex].incorrect_answers];
+   //   const answers = [...answerState.quizzes[indexNum].incorrect_answers];
    //   console.log(answers);
    //   const answersCopies = answers.slice();
    //

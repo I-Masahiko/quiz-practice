@@ -41,9 +41,6 @@
       })
   };
 
-  //forかwhileで10問分の問題の繰り返しを書く
-
-  // i = 0;
 
   const nextQuiz = function() {
     console.log(indexNum + 1);
@@ -56,7 +53,6 @@
     createBtn();
   }
 
-  //ボタンの生成から、クリック後の動作を書く
 
   const createBtn = function() {
 
@@ -64,23 +60,15 @@
     console.log(current);
 
     let  quizNum = answerState.quizzes[indexNum].incorrect_answers.length;
-
-    // shuffleAnswers();
     const answers = [...answerState.quizzes[indexNum].incorrect_answers];
-    console.log(answers);
-    const answersCopies = answers.slice();
+
+    quizShuffles(answers);
 
     for (let answersNum = quizNum - 1 ; answersNum >= 0 ; answersNum-- ){
-      const rand = Math.floor(Math.random() * quizNum);
-      [answers[quizNum],answers[rand]] = [answers[rand],answers[quizNum]]
-    // }
-    //
-    // for (let answersNum = quizNum - 1 ; answersNum >= 0 ; answersNum-- ){
-
       const answerBtn = document.createElement(`button`);
       const br = document.createElement(`br`);
 
-      answerBtn.textContent = answerState.quizzes[indexNum].incorrect_answers[answersNum];
+      answerBtn.textContent = answers[answersNum];
       chooseBtn.appendChild(answerBtn);
       chooseBtn.appendChild(br);
 
@@ -106,7 +94,7 @@
           homeBtn.addEventListener(`click`,()=>{
             homeBtn.hidden = true;
 
-            fetchQuizData();
+          fetchQuizData();
 
           });
         }else {
@@ -128,14 +116,10 @@
      };
    };
 
-
-   // const shuffleAnswers = function() {
-   //   const answers = [...answerState.quizzes[indexNum].incorrect_answers];
-   //   console.log(answers);
-   //   const answersCopies = answers.slice();
-   //
-   //   for (let answersNum = quizNum - 1 ; answersNum >= 0 ; answersNum-- ){
-   //     const rand = Math.floor(Math.random() * quizNum);
-   //     [answers[quizNum],answers[rand]] = [answers[rand],answers[quizNum]]
-   //   }
-   // }
+    const quizShuffles = function(ary) {
+      for (var i = ary.length - 1 ; i >= 0 ; i--) {
+        const rand = Math.floor(Math.random() * (i + 1));
+        [ary[i],ary[rand]] = [ary[rand],ary[i]]
+      };
+      return ary
+    };
